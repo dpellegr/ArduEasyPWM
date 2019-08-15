@@ -60,7 +60,8 @@ const int potpin = 7; // analog pin used to connect the potentiometer
 void setup() {
   pinMode(potpin, INPUT);
   pinMode(9, OUTPUT);
-  PWM9 = PWM(P9, 20e3, 0.5);
+          //(Pin, period [us], duty cycle [0:1])
+  PWM9 = PWM( P9,        20e3,             0.5);
 }
 
 void loop() {
