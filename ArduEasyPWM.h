@@ -47,14 +47,16 @@ struct PWM {
           //switch off
           status = false;
           PORTB &= ~pin;
-          keep_duration *= (full_duty-duty_cycle) / full_duty;
+          keep_duration *= full_duty-duty_cycle;
+          keep_duration /= full_duty;
         }
       } else {
         if ( duty_cycle != 0 ) {
           //switch on
           status = true;
           PORTB |= pin;
-          keep_duration *= duty_cycle / full_duty;
+          keep_duration *= duty_cycle;
+          keep_duration /= full_duty;
         }
       }
       last_switch_time = tnow;
@@ -148,7 +150,7 @@ struct LED {
   template <typename TABLE>
   void up(const TABLE & t) {
     const millis_t now = millis();
-    if (now > last_check + 5) {
+    if (now > last_check + 50) {
       last_check = now;
       const auto period = t.back().a;
       while (now > period_start + period) period_start += period;
