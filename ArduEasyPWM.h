@@ -150,7 +150,7 @@ struct LED {
   template <typename TABLE>
   void up(const TABLE & t) {
     const millis_t now = millis();
-    if (now > last_check + 50) {
+    if (now > last_check + 33) {
       last_check = now;
       const auto period = t.back().a;
       while (now > period_start + period) period_start += period;
@@ -161,11 +161,13 @@ struct LED {
     pwm.up();
   }
 
+  /// will cycle throught the table N times, BLOCKING the rest of the program
   template <typename TABLE>
   void cycle(const TABLE & t, const unsigned N = 1) {
-    const millis_t period = t.back().a;
-    const millis_t timeout = millis() + period*N;
-    while (millis() < timeout) {
+    period_start = millis();
+    const millis_t period  = t.back().a;
+    const millis_t timeout = period_start + period*N;
+    while ( millis() < timeout ) {
       up(t);
     }
   }
