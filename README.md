@@ -17,7 +17,7 @@ unsigned long period_us = 1000000;
 byte duty_cycle = 50;
 byte full_duty = 100;
 
-PWM pwm( PWM::P13, period_us, duty_cycle, full_duty):
+PWM pwm( PWM::P13, period_us, duty_cycle, full_duty);
 
 void loop() {  
   pwm.up();
